@@ -33,7 +33,7 @@ export default function Home() {
 				</div>
 			</section>
 			<section className="px-6 py-16">
-				<div className="max-w-7xlxl container mx-auto">
+				<div className="container mx-auto max-w-7xl">
 					<h2 className="mb-12 text-center text-3xl font-bold">
 						Why Choose a11y academy?
 					</h2>

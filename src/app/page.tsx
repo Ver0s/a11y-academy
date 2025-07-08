@@ -10,8 +10,8 @@ import Link from "next/link";
 
 export default function Home() {
 	return (
-		<main>
-			<section className="from-background to-muted/20 flex justify-center bg-gradient-to-b px-6 py-16 text-center">
+		<main className="px-6">
+			<section className="from-background to-muted/20 flex justify-center bg-gradient-to-b py-16 text-center">
 				<div className="container max-w-4xl">
 					<h1 className="mb-6 text-4xl font-bold md:text-6xl">
 						Master Digital{" "}
@@ -32,7 +32,7 @@ export default function Home() {
 					</div>
 				</div>
 			</section>
-			<section className="px-6 py-16">
+			<section className="py-16">
 				<div className="container mx-auto max-w-7xl">
 					<h2 className="mb-12 text-center text-3xl font-bold">
 						Why Choose a11y academy?
@@ -73,7 +73,7 @@ export default function Home() {
 					</div>
 				</div>
 			</section>
-			<section className="bg-muted/20 px-4 py-16">
+			<section className="bg-muted/20 py-16">
 				<div className="container mx-auto max-w-6xl">
 					<div className="mb-12 text-center">
 						<h2 className="mb-6 text-3xl font-bold">

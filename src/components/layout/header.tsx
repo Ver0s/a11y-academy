@@ -4,7 +4,7 @@ import { ThemeToggle } from "../theme/theme-toggle";
 
 export default function Header() {
 	return (
-		<header className="bg-background sticky top-0 z-50 flex w-full justify-between border-b p-4">
+		<header className="bg-background sticky top-0 z-50 flex w-full justify-between border-b px-6 py-4">
 			<Link href="/" className="flex items-center gap-2">
 				<BookOpen className="h-6 w-6" />
 				<span className="text-xl font-bold">a11y academy</span>

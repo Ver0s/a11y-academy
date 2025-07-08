@@ -10,29 +10,27 @@ export default function Header() {
 				<span className="text-xl font-bold">AccessiLearn</span>
 			</Link>
 
-			<div className="flex items-center space-x-6">
-				<nav className="hidden items-center space-x-6 md:flex">
-					<Link
-						href="/modules"
-						className="hover:text-primary text-sm font-medium"
-					>
-						Modules
-					</Link>
-					<Link
-						href="/progress"
-						className="hover:text-primary text-sm font-medium"
-					>
-						Progress
-					</Link>
-					<Link
-						href="/contribute"
-						className="hover:text-primary text-sm font-medium"
-					>
-						Contribute
-					</Link>
-					<ThemeToggle />
-				</nav>
-			</div>
+			<nav className="hidden items-center space-x-6 md:flex">
+				<Link
+					href="/modules"
+					className="hover:text-primary text-sm font-medium"
+				>
+					Modules
+				</Link>
+				<Link
+					href="/progress"
+					className="hover:text-primary text-sm font-medium"
+				>
+					Progress
+				</Link>
+				<Link
+					href="/contribute"
+					className="hover:text-primary text-sm font-medium"
+				>
+					Contribute
+				</Link>
+				<ThemeToggle />
+			</nav>
 		</header>
 	);
 }

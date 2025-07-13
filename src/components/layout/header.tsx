@@ -12,22 +12,16 @@ export default function Header() {
 
 			<nav className="hidden items-center gap-6 md:flex">
 				<Link
-					href="/modules"
+					href="/learning-paths"
 					className="hover:text-primary text-sm font-medium"
 				>
-					Modules
+					Learning Paths
 				</Link>
 				<Link
 					href="/progress"
 					className="hover:text-primary text-sm font-medium"
 				>
 					Progress
-				</Link>
-				<Link
-					href="/contribute"
-					className="hover:text-primary text-sm font-medium"
-				>
-					Contribute
 				</Link>
 				<ThemeToggle />
 			</nav>

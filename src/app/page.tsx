@@ -26,7 +26,9 @@ export default function Home() {
 						<Link href="/learning-paths">Start Learning</Link>
 					</Button>
 					<Button size="lg" variant="outline" asChild>
-						<Link href="http://github.com/">Contribute</Link>
+						<a href="http://github.com/" target="_blank">
+							Contribute
+						</a>
 					</Button>
 				</div>
 			</section>
@@ -89,11 +91,6 @@ export default function Home() {
 								landmarks, and lists to create meaningful
 								document structure.
 							</p>
-							<ul className="space-y-1 text-sm">
-								<li>• Using h1-h6 for logical hierarchy</li>
-								<li>• Navigation and main content areas</li>
-								<li>• When to use articles vs sections</li>
-							</ul>
 						</div>
 
 						<div className="bg-background rounded-lg border p-6">
@@ -105,11 +102,6 @@ export default function Home() {
 								interfaces accessible to screen readers and
 								assistive technologies.
 							</p>
-							<ul className="space-y-1 text-sm">
-								<li>• aria-label for descriptive names</li>
-								<li>• aria-expanded for dropdowns</li>
-								<li>• Custom component roles</li>
-							</ul>
 						</div>
 
 						<div className="bg-background rounded-lg border p-6">
@@ -120,11 +112,6 @@ export default function Home() {
 								Ensure your websites work perfectly for users
 								who navigate with keyboards instead of mice.
 							</p>
-							<ul className="space-y-1 text-sm">
-								<li>• Focus management and indicators</li>
-								<li>• Tab order and skip links</li>
-								<li>• Modal and dropdown patterns</li>
-							</ul>
 						</div>
 
 						<div className="bg-background rounded-lg border p-6">
@@ -135,11 +122,6 @@ export default function Home() {
 								Design with sufficient contrast ratios and avoid
 								relying solely on color to convey information.
 							</p>
-							<ul className="space-y-1 text-sm">
-								<li>• WCAG contrast requirements</li>
-								<li>• Color blindness considerations</li>
-								<li>• Testing tools and techniques</li>
-							</ul>
 						</div>
 
 						<div className="bg-background rounded-lg border p-6">
@@ -151,11 +133,6 @@ export default function Home() {
 								complete for all users, including those using
 								assistive technology.
 							</p>
-							<ul className="space-y-1 text-sm">
-								<li>• Proper labels and descriptions</li>
-								<li>• Error handling and validation</li>
-								<li>• Fieldset and legend usage</li>
-							</ul>
 						</div>
 
 						<div className="bg-background rounded-lg border p-6">
@@ -166,11 +143,6 @@ export default function Home() {
 								Learn to test your work with automated tools,
 								manual testing, and real assistive technologies.
 							</p>
-							<ul className="space-y-1 text-sm">
-								<li>• Screen reader testing</li>
-								<li>• Automated accessibility scanners</li>
-								<li>• Manual testing checklists</li>
-							</ul>
 						</div>
 					</div>
 				</div>

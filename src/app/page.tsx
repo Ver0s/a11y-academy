@@ -53,8 +53,8 @@ export default function Home() {
 							<Users className="text-primary mb-4 h-10 w-10" />
 							<CardTitle>Community Driven</CardTitle>
 							<CardDescription>
-								Content created and maintained by accessibility
-								experts and practitioners from around the world.
+								Content created and maintained by a dedicated
+								community from around the world.
 							</CardDescription>
 						</CardHeader>
 					</Card>

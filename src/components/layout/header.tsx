@@ -17,12 +17,6 @@ export default function Header() {
 				>
 					Learning Paths
 				</Link>
-				<Link
-					href="/progress"
-					className="hover:text-primary text-sm font-medium"
-				>
-					Progress
-				</Link>
 				<ThemeToggle />
 			</nav>
 		</header>

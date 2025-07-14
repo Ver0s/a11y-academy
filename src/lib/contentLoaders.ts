@@ -26,6 +26,14 @@ export interface LearningPath extends PathMetadata {
 	lessonCount: number;
 }
 
+export type LessonContent = {
+	content: string;
+	metadata: LessonMetadata;
+	pathSlug: string;
+	lessonSlug: string;
+	id: string;
+};
+
 export async function getAllLearningPaths(): Promise<LearningPath[]> {
 	const learningPathsDir = path.join(
 		process.cwd(),
@@ -164,4 +172,92 @@ export async function getAllLearningPathSlugs(): Promise<string[]> {
 		console.error("Error loading learning path slugs:", error);
 		return [];
 	}
+}
+
+export async function getLessonContent(
+	pathSlug: string,
+	lessonSlug: string,
+): Promise<LessonContent | undefined> {
+	const pathsDir = path.join(process.cwd(), "src/content/learning-paths");
+	const pathDir = path.join(pathsDir, pathSlug);
+	const lessonPath = path.join(pathDir, `${lessonSlug}.mdx`);
+
+	// Try .mdx first, then .md
+	if (!fs.existsSync(lessonPath)) {
+		const mdPath = path.join(pathDir, `${lessonSlug}.md`);
+		if (!fs.existsSync(mdPath)) {
+			return undefined;
+		}
+		const fileContent = fs.readFileSync(mdPath, "utf8");
+		const { data, content } = matter(fileContent) as unknown as {
+			data: LessonMetadata;
+			content: string;
+		};
+
+		if (!data.title || !data.order) {
+			console.warn(
+				`Missing required fields (title, order) in ${pathSlug}/${lessonSlug}.md`,
+			);
+			return undefined;
+		}
+
+		return {
+			content,
+			metadata: data,
+			pathSlug,
+			lessonSlug,
+			id: `${pathSlug}/${lessonSlug}`,
+		};
+	}
+
+	const fileContent = fs.readFileSync(lessonPath, "utf8");
+	const { data, content } = matter(fileContent) as unknown as {
+		data: LessonMetadata;
+		content: string;
+	};
+
+	if (!data.title || !data.order) {
+		console.warn(
+			`Missing required fields (title, order) in ${pathSlug}/${lessonSlug}.mdx`,
+		);
+		return undefined;
+	}
+
+	return {
+		content,
+		metadata: data,
+		pathSlug,
+		lessonSlug,
+		id: `${pathSlug}/${lessonSlug}`,
+	};
+}
+
+export async function getAllLessonSlugs(): Promise<
+	Array<{ pathSlug: string; lessonSlug: string }>
+> {
+	const pathsDir = path.join(process.cwd(), "src/content/learning-paths");
+	const pathDirectories = fs
+		.readdirSync(pathsDir, { withFileTypes: true })
+		.filter((dirent) => dirent.isDirectory())
+		.map((dirent) => dirent.name);
+
+	const lessonSlugs: Array<{ pathSlug: string; lessonSlug: string }> = [];
+
+	for (const pathSlug of pathDirectories) {
+		const pathDir = path.join(pathsDir, pathSlug);
+		const lessonFiles = fs
+			.readdirSync(pathDir)
+			.filter(
+				(file) =>
+					(file.endsWith(".mdx") || file.endsWith(".md")) &&
+					file !== "path-metadata.json",
+			);
+
+		for (const lessonFile of lessonFiles) {
+			const lessonSlug = lessonFile.replace(/\.mdx?$/, "");
+			lessonSlugs.push({ pathSlug, lessonSlug });
+		}
+	}
+
+	return lessonSlugs;
 }

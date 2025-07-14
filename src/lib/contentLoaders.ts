@@ -62,11 +62,10 @@ export async function getAllLearningPaths(): Promise<LearningPath[]> {
 			const metadataContent = fs.readFileSync(metadataPath, "utf-8");
 			const metadata: PathMetadata = JSON.parse(metadataContent);
 
-			// Count lesson files (.mdx files, excluding path-metadata.json)
+			// Count lesson files (.md files, excluding path-metadata.json)
 			const files = fs.readdirSync(pathDir);
 			const lessonCount = files.filter(
-				(file) =>
-					file.endsWith(".mdx") && file !== "path-metadata.json",
+				(file) => file.endsWith(".md") && file !== "path-metadata.json",
 			).length;
 
 			learningPaths.push({
@@ -97,9 +96,7 @@ export async function getLessonsForPath(
 	const lessonFiles = fs
 		.readdirSync(pathDir)
 		.filter(
-			(file) =>
-				(file.endsWith(".mdx") || file.endsWith(".md")) &&
-				file !== "path-metadata.json",
+			(file) => file.endsWith(".md") && file !== "path-metadata.json",
 		);
 
 	const lessons: Lesson[] = lessonFiles
@@ -110,7 +107,7 @@ export async function getLessonsForPath(
 				data: LessonMetadata;
 			};
 
-			const lessonSlug = lessonFile.replace(/\.mdx?$/, "");
+			const lessonSlug = lessonFile.replace(/\.md$/, "");
 
 			if (!data.title || !data.order) {
 				console.warn(
@@ -180,34 +177,10 @@ export async function getLessonContent(
 ): Promise<LessonContent | undefined> {
 	const pathsDir = path.join(process.cwd(), "src/content/learning-paths");
 	const pathDir = path.join(pathsDir, pathSlug);
-	const lessonPath = path.join(pathDir, `${lessonSlug}.mdx`);
+	const lessonPath = path.join(pathDir, `${lessonSlug}.md`);
 
-	// Try .mdx first, then .md
 	if (!fs.existsSync(lessonPath)) {
-		const mdPath = path.join(pathDir, `${lessonSlug}.md`);
-		if (!fs.existsSync(mdPath)) {
-			return undefined;
-		}
-		const fileContent = fs.readFileSync(mdPath, "utf8");
-		const { data, content } = matter(fileContent) as unknown as {
-			data: LessonMetadata;
-			content: string;
-		};
-
-		if (!data.title || !data.order) {
-			console.warn(
-				`Missing required fields (title, order) in ${pathSlug}/${lessonSlug}.md`,
-			);
-			return undefined;
-		}
-
-		return {
-			content,
-			metadata: data,
-			pathSlug,
-			lessonSlug,
-			id: `${pathSlug}/${lessonSlug}`,
-		};
+		return undefined;
 	}
 
 	const fileContent = fs.readFileSync(lessonPath, "utf8");
@@ -218,7 +191,7 @@ export async function getLessonContent(
 
 	if (!data.title || !data.order) {
 		console.warn(
-			`Missing required fields (title, order) in ${pathSlug}/${lessonSlug}.mdx`,
+			`Missing required fields (title, order) in ${pathSlug}/${lessonSlug}.md`,
 		);
 		return undefined;
 	}
@@ -248,13 +221,11 @@ export async function getAllLessonSlugs(): Promise<
 		const lessonFiles = fs
 			.readdirSync(pathDir)
 			.filter(
-				(file) =>
-					(file.endsWith(".mdx") || file.endsWith(".md")) &&
-					file !== "path-metadata.json",
+				(file) => file.endsWith(".md") && file !== "path-metadata.json",
 			);
 
 		for (const lessonFile of lessonFiles) {
-			const lessonSlug = lessonFile.replace(/\.mdx?$/, "");
+			const lessonSlug = lessonFile.replace(/\.md$/, "");
 			lessonSlugs.push({ pathSlug, lessonSlug });
 		}
 	}

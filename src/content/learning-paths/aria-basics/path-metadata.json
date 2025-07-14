@@ -1,0 +1,8 @@
+{
+	"title": "ARIA Basics",
+	"description": "Master the essential ARIA attributes for creating accessible web applications and complex interfaces.",
+	"difficulty": "intermediate",
+	"order": 2,
+	"author": "A11y Academy Team",
+	"tags": ["aria", "attributes", "roles", "properties", "states"]
+}

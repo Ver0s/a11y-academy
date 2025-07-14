@@ -1,5 +1,4 @@
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
 	getAllLessonSlugs,
 	getLessonContent,
@@ -68,24 +67,10 @@ export default async function LessonPage({
 			</div>
 
 			{/* Main Content */}
-			<article className="mx-auto max-w-4xl">
-				<Card>
-					<CardHeader>
-						<CardTitle className="text-2xl">
-							{lessonContent.metadata.title}
-						</CardTitle>
-						{lessonContent.metadata.description && (
-							<p className="text-muted-foreground">
-								{lessonContent.metadata.description}
-							</p>
-						)}
-					</CardHeader>
-					<CardContent>
-						<div className="prose prose-neutral dark:prose-invert max-w-none">
-							<MDXRemote source={lessonContent.content} />
-						</div>
-					</CardContent>
-				</Card>
+			<article>
+				<div className="prose prose-neutral dark:prose-invert mx-auto max-w-3xl p-8">
+					<MDXRemote source={lessonContent.content} />
+				</div>
 
 				{/* Navigation */}
 				<div className="mt-8 flex justify-between">

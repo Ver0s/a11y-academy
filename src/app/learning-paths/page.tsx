@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 import {
 	Card,
 	CardContent,
@@ -7,10 +8,11 @@ import {
 	CardTitle,
 } from "@/components/ui/card";
 import { getAllLearningPaths } from "@/lib/contentLoaders";
+import Link from "next/link";
 
 export default async function LearningPaths() {
 	const learningPaths = await getAllLearningPaths();
-	console.log(learningPaths);
+
 	return (
 		<div className="container mx-auto min-h-screen px-4 py-8">
 			<div className="mb-8">
@@ -41,9 +43,11 @@ export default async function LearningPaths() {
 							</div>
 						</CardContent>
 						<CardFooter>
-							<button className="bg-primary text-primary-foreground hover:bg-primary/90 w-full rounded-md px-4 py-2 transition-colors">
-								Start Learning
-							</button>
+							<Button asChild>
+								<Link href={`/learning-paths/${path.slug}`}>
+									Start Learning
+								</Link>
+							</Button>
 						</CardFooter>
 					</Card>
 				))}

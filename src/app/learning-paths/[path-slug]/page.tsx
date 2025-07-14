@@ -1,0 +1,99 @@
+import { Button } from "@/components/ui/button";
+import {
+	Card,
+	CardContent,
+	CardDescription,
+	CardHeader,
+	CardTitle,
+} from "@/components/ui/card";
+import { getLessonsForPath, getPathMetadata } from "@/lib/contentLoaders";
+import Link from "next/link";
+import { notFound } from "next/navigation";
+
+// export async function generateStaticParams() {
+// 	const learningPaths = await getAllLearningPaths();
+// 	return learningPaths.map((path) => ({
+// 		"path-slug": path.slug,
+// 	}));
+// }
+
+export default async function LearningPathPage({
+	params,
+}: {
+	params: Promise<{ "path-slug": string }>;
+}) {
+	const { "path-slug": pathSlug } = await params;
+	console.log(pathSlug);
+
+	const [pathMetadata, lessons] = await Promise.all([
+		getPathMetadata(pathSlug),
+		getLessonsForPath(pathSlug),
+	]);
+
+	if (!pathMetadata || !lessons) {
+		notFound();
+	}
+
+	return (
+		<div className="container mx-auto min-h-screen px-4 py-8">
+			<div className="mb-8">
+				<Link
+					href="/learning-paths"
+					className="text-primary hover:text-primary/80 mb-4 inline-block text-sm"
+				>
+					← Back to Learning Paths
+				</Link>
+				<h1 className="mb-4 text-3xl font-bold">
+					{pathMetadata.title}
+				</h1>
+				<p className="text-muted-foreground">
+					{pathMetadata.description}
+				</p>
+			</div>
+
+			<div className="space-y-4">
+				{lessons.map((lesson, index) => (
+					<Card
+						key={lesson.id}
+						className="transition-shadow hover:shadow-lg"
+					>
+						<CardHeader>
+							<div className="flex items-start justify-between">
+								<div>
+									<CardTitle className="flex items-center gap-2">
+										<span className="bg-primary/10 text-primary flex h-6 w-6 items-center justify-center rounded-full text-sm font-medium">
+											{index + 1}
+										</span>
+										{lesson.title}
+									</CardTitle>
+									{lesson.description && (
+										<CardDescription className="mt-2">
+											{lesson.description}
+										</CardDescription>
+									)}
+								</div>
+							</div>
+						</CardHeader>
+						<CardContent>
+							<Button asChild>
+								<Link
+									href={`/learning-paths/${pathSlug}/${lesson.lessonSlug}`}
+								>
+									Start Lesson
+								</Link>
+							</Button>
+						</CardContent>
+					</Card>
+				))}
+			</div>
+
+			{lessons.length === 0 && (
+				<div className="py-12 text-center">
+					<p className="text-muted-foreground">
+						No lessons found for this path.
+					</p>
+				</div>
+			)}
+		</div>
+	);
+}

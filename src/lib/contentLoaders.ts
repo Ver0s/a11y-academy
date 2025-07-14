@@ -2,20 +2,24 @@ import fs from "fs";
 import matter from "gray-matter";
 import path from "path";
 
-export interface PathMetadata {
+export type PathMetadata = {
 	title: string;
 	description: string;
 	order: number;
-}
+};
 
-export interface Lesson {
+type LessonMetadata = {
+	title: string;
+	description: string;
+	order: number;
+};
+
+export type Lesson = {
 	/* Composite: pathSlug/lessonSlug */
 	id: string;
 	lessonSlug: string;
 	pathSlug: string;
-	title: string;
-	order: number;
-}
+} & LessonMetadata;
 
 export interface LearningPath extends PathMetadata {
 	slug: string;
@@ -72,12 +76,14 @@ export async function getAllLearningPaths(): Promise<LearningPath[]> {
 	}
 }
 
-export async function getLessonsForPath(pathSlug: string): Promise<Lesson[]> {
-	const pathsDir = path.join(process.cwd(), "learning-paths");
+export async function getLessonsForPath(
+	pathSlug: string,
+): Promise<Lesson[] | undefined> {
+	const pathsDir = path.join(process.cwd(), "src/content/learning-paths");
 	const pathDir = path.join(pathsDir, pathSlug);
 
 	if (!fs.existsSync(pathDir)) {
-		throw new Error(`Path not found: ${pathSlug}`);
+		return undefined;
 	}
 
 	const lessonFiles = fs
@@ -92,26 +98,51 @@ export async function getLessonsForPath(pathSlug: string): Promise<Lesson[]> {
 		.map((lessonFile) => {
 			const filePath = path.join(pathDir, lessonFile);
 			const fileContent = fs.readFileSync(filePath, "utf8");
-			const { data } = matter(fileContent);
+			const { data } = matter(fileContent) as unknown as {
+				data: LessonMetadata;
+			};
 
 			const lessonSlug = lessonFile.replace(/\.mdx?$/, "");
 
-			if (!data.title || data.order === undefined) {
-				throw new Error(
+			if (!data.title || !data.order) {
+				console.warn(
 					`Missing required fields (title, order) in ${pathSlug}/${lessonFile}`,
 				);
+				return undefined;
 			}
 
 			return {
+				id: `${pathSlug}/${lessonSlug}`,
 				lessonSlug,
 				pathSlug,
-				id: `${pathSlug}/${lessonSlug}`,
 				title: data.title,
 				order: data.order,
 				description: data.description,
 			};
 		})
+		.filter((lesson): lesson is Lesson => lesson !== undefined)
 		.sort((a, b) => a.order - b.order);
 
 	return lessons;
+}
+
+export async function getPathMetadata(
+	pathSlug: string,
+): Promise<PathMetadata | undefined> {
+	const pathsDir = path.join(process.cwd(), "src/content/learning-paths");
+	const pathDir = path.join(pathsDir, pathSlug);
+	const metadataPath = path.join(pathDir, "path-metadata.json");
+
+	if (!fs.existsSync(metadataPath)) {
+		return undefined;
+	}
+
+	try {
+		const metadataContent = fs.readFileSync(metadataPath, "utf-8");
+		const metadata: PathMetadata = JSON.parse(metadataContent);
+		return metadata;
+	} catch (error) {
+		console.error(`Error parsing metadata for ${pathSlug}:`, error);
+		return undefined;
+	}
 }

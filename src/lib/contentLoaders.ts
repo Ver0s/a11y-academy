@@ -146,3 +146,22 @@ export async function getPathMetadata(
 		return undefined;
 	}
 }
+
+export async function getAllLearningPathSlugs(): Promise<string[]> {
+	const learningPathsDir = path.join(
+		process.cwd(),
+		"src/content/learning-paths",
+	);
+
+	try {
+		const pathDirectories = fs
+			.readdirSync(learningPathsDir, { withFileTypes: true })
+			.filter((dirent) => dirent.isDirectory())
+			.map((dirent) => dirent.name);
+
+		return pathDirectories;
+	} catch (error) {
+		console.error("Error loading learning path slugs:", error);
+		return [];
+	}
+}

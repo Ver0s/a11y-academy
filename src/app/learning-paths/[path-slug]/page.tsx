@@ -6,16 +6,20 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
-import { getLessonsForPath, getPathMetadata } from "@/lib/contentLoaders";
+import {
+	getAllLearningPathSlugs,
+	getLessonsForPath,
+	getPathMetadata,
+} from "@/lib/contentLoaders";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
-// export async function generateStaticParams() {
-// 	const learningPaths = await getAllLearningPaths();
-// 	return learningPaths.map((path) => ({
-// 		"path-slug": path.slug,
-// 	}));
-// }
+export async function generateStaticParams() {
+	const learningPaths = await getAllLearningPathSlugs();
+	return learningPaths.map((path) => ({
+		"path-slug": path,
+	}));
+}
 
 export default async function LearningPathPage({
 	params,
@@ -23,7 +27,6 @@ export default async function LearningPathPage({
 	params: Promise<{ "path-slug": string }>;
 }) {
 	const { "path-slug": pathSlug } = await params;
-	console.log(pathSlug);
 
 	const [pathMetadata, lessons] = await Promise.all([
 		getPathMetadata(pathSlug),

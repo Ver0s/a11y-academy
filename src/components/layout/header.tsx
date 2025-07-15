@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { BookOpen } from "lucide-react";
 import { ThemeToggle } from "../theme/theme-toggle";
+import { Button } from "../ui/button";
 
 export default function Header() {
 	return (
@@ -17,6 +18,12 @@ export default function Header() {
 				>
 					Learning Paths
 				</Link>
+				<Button asChild variant="outline" size="sm">
+					<Link href="/signin">Sign in</Link>
+				</Button>
+				<Button asChild variant="default" size="sm">
+					<Link href="/signup">Sign up</Link>
+				</Button>
 				<ThemeToggle />
 			</nav>
 		</header>

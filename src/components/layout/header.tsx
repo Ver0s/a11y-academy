@@ -1,20 +1,29 @@
 "use client";
 
 import Link from "next/link";
-import { BookOpen, LogOut, User } from "lucide-react";
+import { BookOpen, Loader2 } from "lucide-react";
 import { ThemeToggle } from "../theme/theme-toggle";
 import { Button } from "../ui/button";
-import {
-	DropdownMenu,
-	DropdownMenuContent,
-	DropdownMenuItem,
-	DropdownMenuSeparator,
-	DropdownMenuTrigger,
-} from "../ui/dropdown-menu";
-import { Avatar, AvatarFallback } from "../ui/avatar";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function Header() {
-	const user = undefined;
+	const user = false;
+	const [loading, setLoading] = useState(false);
+	const router = useRouter();
+
+	const handleSignOut = async () => {
+		setLoading(true);
+		await new Promise((resolve) => setTimeout(resolve, 1000));
+
+		const error = undefined;
+
+		if (!error) {
+			router.push("/");
+		}
+
+		setLoading(false);
+	};
 
 	return (
 		<header className="bg-background sticky top-0 z-50 flex w-full justify-between border-b px-6 py-4">
@@ -31,40 +40,19 @@ export default function Header() {
 					Learning Paths
 				</Link>
 				{user ? (
-					<>
-						<DropdownMenu>
-							<DropdownMenuTrigger asChild>
-								<Button
-									variant="ghost"
-									className="relative h-8 w-8 rounded-full"
-								>
-									<Avatar className="h-8 w-8">
-										<AvatarFallback>
-											<User />
-										</AvatarFallback>
-									</Avatar>
-								</Button>
-							</DropdownMenuTrigger>
-							<DropdownMenuContent
-								className="w-56"
-								align="end"
-								forceMount
-							>
-								<div className="flex items-center justify-start gap-2 p-2">
-									<div className="flex flex-col space-y-1 leading-none">
-										<p className="text-muted-foreground w-[200px] truncate text-sm">
-											testmail@test.com
-										</p>
-									</div>
-								</div>
-								<DropdownMenuSeparator />
-								<DropdownMenuItem onClick={() => {}}>
-									<LogOut className="mr-2 h-4 w-4" />
-									Sign out
-								</DropdownMenuItem>
-							</DropdownMenuContent>
-						</DropdownMenu>
-					</>
+					<Button
+						variant="outline"
+						size="sm"
+						onClick={handleSignOut}
+						disabled={loading}
+						className="w-20"
+					>
+						{loading ? (
+							<Loader2 className="animate-spin" />
+						) : (
+							"Sign out"
+						)}
+					</Button>
 				) : (
 					<div className="flex items-center gap-6">
 						<Button asChild variant="outline" size="sm">

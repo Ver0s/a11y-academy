@@ -2,22 +2,15 @@
 
 import { useState } from "react";
 import { Button } from "./ui/button";
-import { useRouter } from "next/navigation";
 import { Loader2 } from "lucide-react";
+import { signOut } from "@/app/actions/auth";
 
-export default function LogOutButton() {
+export default function SignOutButton() {
 	const [loading, setLoading] = useState(false);
-	const router = useRouter();
 
 	const handleSignOut = async () => {
 		setLoading(true);
-		await new Promise((resolve) => setTimeout(resolve, 1000));
-
-		const error = undefined;
-
-		if (!error) {
-			router.push("/");
-		}
+		await signOut();
 
 		setLoading(false);
 	};

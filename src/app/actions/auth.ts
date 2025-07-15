@@ -18,6 +18,7 @@ export async function signIn(email: string, password: string) {
 	revalidatePath("/", "layout");
 	redirect("/");
 }
+
 export async function signUp(email: string, password: string) {
 	const supabase = await createClient();
 	// type-casting here for convenience
@@ -30,6 +31,18 @@ export async function signUp(email: string, password: string) {
 	if (error) {
 		redirect("/error");
 	}
+	revalidatePath("/", "layout");
+	redirect("/");
+}
+
+export async function signOut() {
+	const supabase = await createClient();
+	const { error } = await supabase.auth.signOut();
+
+	if (error) {
+		redirect("/error");
+	}
+
 	revalidatePath("/", "layout");
 	redirect("/");
 }

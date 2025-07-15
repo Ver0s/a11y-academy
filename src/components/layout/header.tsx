@@ -2,7 +2,7 @@ import Link from "next/link";
 import { BookOpen } from "lucide-react";
 import { ThemeToggle } from "../theme/theme-toggle";
 import { Button } from "../ui/button";
-import LogOutButton from "../log-out-button";
+import SignOutButton from "../sign-out-button";
 import { createClient } from "@/lib/supabase/server";
 
 export default async function Header() {
@@ -27,7 +27,7 @@ export default async function Header() {
 					Learning Paths
 				</Link>
 				{user ? (
-					<LogOutButton />
+					<SignOutButton />
 				) : (
 					<div className="flex items-center gap-6">
 						<Button asChild variant="outline" size="sm">

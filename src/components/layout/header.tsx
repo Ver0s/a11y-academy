@@ -1,29 +1,16 @@
-"use client";
-
 import Link from "next/link";
-import { BookOpen, Loader2 } from "lucide-react";
+import { BookOpen } from "lucide-react";
 import { ThemeToggle } from "../theme/theme-toggle";
 import { Button } from "../ui/button";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import LogOutButton from "../log-out-button";
+import { createClient } from "@/lib/supabase/server";
 
-export default function Header() {
-	const user = false;
-	const [loading, setLoading] = useState(false);
-	const router = useRouter();
-
-	const handleSignOut = async () => {
-		setLoading(true);
-		await new Promise((resolve) => setTimeout(resolve, 1000));
-
-		const error = undefined;
-
-		if (!error) {
-			router.push("/");
-		}
-
-		setLoading(false);
-	};
+export default async function Header() {
+	const supabase = await createClient();
+	const {
+		data: { user },
+	} = await supabase.auth.getUser();
+	console.warn(user);
 
 	return (
 		<header className="bg-background sticky top-0 z-50 flex w-full justify-between border-b px-6 py-4">
@@ -40,19 +27,7 @@ export default function Header() {
 					Learning Paths
 				</Link>
 				{user ? (
-					<Button
-						variant="outline"
-						size="sm"
-						onClick={handleSignOut}
-						disabled={loading}
-						className="w-20"
-					>
-						{loading ? (
-							<Loader2 className="animate-spin" />
-						) : (
-							"Sign out"
-						)}
-					</Button>
+					<LogOutButton />
 				) : (
 					<div className="flex items-center gap-6">
 						<Button asChild variant="outline" size="sm">

@@ -1,6 +1,15 @@
-import fs from "fs";
+import { promises as fs } from "fs";
 import matter from "gray-matter";
 import path from "path";
+
+async function fileExists(filePath: string): Promise<boolean> {
+	try {
+		await fs.access(filePath);
+		return true;
+	} catch {
+		return false;
+	}
+}
 
 export type PathMetadata = {
 	title: string;
@@ -41,8 +50,9 @@ export async function getAllLearningPaths(): Promise<LearningPath[]> {
 	);
 
 	try {
-		const pathDirectories = fs
-			.readdirSync(learningPathsDir, { withFileTypes: true })
+		const pathDirectories = (
+			await fs.readdir(learningPathsDir, { withFileTypes: true })
+		)
 			.filter((dirent) => dirent.isDirectory())
 			.map((dirent) => dirent.name);
 
@@ -53,17 +63,17 @@ export async function getAllLearningPaths(): Promise<LearningPath[]> {
 			const metadataPath = path.join(pathDir, "path-metadata.json");
 
 			// Check if metadata file exists
-			if (!fs.existsSync(metadataPath)) {
+			if (!(await fileExists(metadataPath))) {
 				console.warn(`No path-metadata.json found for ${dirName}`);
 				continue;
 			}
 
 			// Read and parse metadata
-			const metadataContent = fs.readFileSync(metadataPath, "utf-8");
+			const metadataContent = await fs.readFile(metadataPath, "utf-8");
 			const metadata: PathMetadata = JSON.parse(metadataContent);
 
 			// Count lesson files (.md files, excluding path-metadata.json)
-			const files = fs.readdirSync(pathDir);
+			const files = await fs.readdir(pathDir);
 			const lessonCount = files.filter(
 				(file) => file.endsWith(".md") && file !== "path-metadata.json",
 			).length;
@@ -89,46 +99,43 @@ export async function getLessonsForPath(
 	const pathsDir = path.join(process.cwd(), "src/content/learning-paths");
 	const pathDir = path.join(pathsDir, pathSlug);
 
-	if (!fs.existsSync(pathDir)) {
+	if (!(await fileExists(pathDir))) {
 		return undefined;
 	}
 
-	const lessonFiles = fs
-		.readdirSync(pathDir)
-		.filter(
-			(file) => file.endsWith(".md") && file !== "path-metadata.json",
-		);
+	const lessonFiles = (await fs.readdir(pathDir)).filter(
+		(file) => file.endsWith(".md") && file !== "path-metadata.json",
+	);
 
-	const lessons: Lesson[] = lessonFiles
-		.map((lessonFile) => {
-			const filePath = path.join(pathDir, lessonFile);
-			const fileContent = fs.readFileSync(filePath, "utf8");
-			const { data } = matter(fileContent) as unknown as {
-				data: LessonMetadata;
-			};
+	const lessons: Lesson[] = [];
 
-			const lessonSlug = lessonFile.replace(/\.md$/, "");
+	for (const lessonFile of lessonFiles) {
+		const filePath = path.join(pathDir, lessonFile);
+		const fileContent = await fs.readFile(filePath, "utf8");
+		const { data } = matter(fileContent) as unknown as {
+			data: LessonMetadata;
+		};
 
-			if (!data.title || !data.order) {
-				console.warn(
-					`Missing required fields (title, order) in ${pathSlug}/${lessonFile}`,
-				);
-				return undefined;
-			}
+		const lessonSlug = lessonFile.replace(/\.md$/, "");
 
-			return {
-				id: `${pathSlug}/${lessonSlug}`,
-				lessonSlug,
-				pathSlug,
-				title: data.title,
-				order: data.order,
-				description: data.description,
-			};
-		})
-		.filter((lesson): lesson is Lesson => lesson !== undefined)
-		.sort((a, b) => a.order - b.order);
+		if (!data.title || !data.order) {
+			console.warn(
+				`Missing required fields (title, order) in ${pathSlug}/${lessonFile}`,
+			);
+			continue;
+		}
 
-	return lessons;
+		lessons.push({
+			id: `${pathSlug}/${lessonSlug}`,
+			lessonSlug,
+			pathSlug,
+			title: data.title,
+			order: data.order,
+			description: data.description,
+		});
+	}
+
+	return lessons.sort((a, b) => a.order - b.order);
 }
 
 export async function getPathMetadata(
@@ -138,12 +145,12 @@ export async function getPathMetadata(
 	const pathDir = path.join(pathsDir, pathSlug);
 	const metadataPath = path.join(pathDir, "path-metadata.json");
 
-	if (!fs.existsSync(metadataPath)) {
+	if (!(await fileExists(metadataPath))) {
 		return undefined;
 	}
 
 	try {
-		const metadataContent = fs.readFileSync(metadataPath, "utf-8");
+		const metadataContent = await fs.readFile(metadataPath, "utf-8");
 		const metadata: PathMetadata = JSON.parse(metadataContent);
 		return metadata;
 	} catch (error) {
@@ -159,8 +166,9 @@ export async function getAllLearningPathSlugs(): Promise<string[]> {
 	);
 
 	try {
-		const pathDirectories = fs
-			.readdirSync(learningPathsDir, { withFileTypes: true })
+		const pathDirectories = (
+			await fs.readdir(learningPathsDir, { withFileTypes: true })
+		)
 			.filter((dirent) => dirent.isDirectory())
 			.map((dirent) => dirent.name);
 
@@ -179,11 +187,11 @@ export async function getLessonContent(
 	const pathDir = path.join(pathsDir, pathSlug);
 	const lessonPath = path.join(pathDir, `${lessonSlug}.md`);
 
-	if (!fs.existsSync(lessonPath)) {
+	if (!(await fileExists(lessonPath))) {
 		return undefined;
 	}
 
-	const fileContent = fs.readFileSync(lessonPath, "utf8");
+	const fileContent = await fs.readFile(lessonPath, "utf8");
 	const { data, content } = matter(fileContent) as unknown as {
 		data: LessonMetadata;
 		content: string;
@@ -209,8 +217,9 @@ export async function getAllLessonSlugs(): Promise<
 	Array<{ pathSlug: string; lessonSlug: string }>
 > {
 	const pathsDir = path.join(process.cwd(), "src/content/learning-paths");
-	const pathDirectories = fs
-		.readdirSync(pathsDir, { withFileTypes: true })
+	const pathDirectories = (
+		await fs.readdir(pathsDir, { withFileTypes: true })
+	)
 		.filter((dirent) => dirent.isDirectory())
 		.map((dirent) => dirent.name);
 
@@ -218,11 +227,9 @@ export async function getAllLessonSlugs(): Promise<
 
 	for (const pathSlug of pathDirectories) {
 		const pathDir = path.join(pathsDir, pathSlug);
-		const lessonFiles = fs
-			.readdirSync(pathDir)
-			.filter(
-				(file) => file.endsWith(".md") && file !== "path-metadata.json",
-			);
+		const lessonFiles = (await fs.readdir(pathDir)).filter(
+			(file) => file.endsWith(".md") && file !== "path-metadata.json",
+		);
 
 		for (const lessonFile of lessonFiles) {
 			const lessonSlug = lessonFile.replace(/\.md$/, "");

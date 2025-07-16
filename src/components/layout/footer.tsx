@@ -3,7 +3,7 @@ export default function Footer() {
 		<footer className="p6-4 border-t py-4">
 			<div className="text-muted-foreground flex items-center justify-center gap-2">
 				<p>
-					&copy; {new Date().getFullYear()} a11y academy. All rights
+					&copy; {new Date().getFullYear()} a11y-academy. All rights
 					reserved.
 				</p>
 				<a href="https://github.com" target="_blank">

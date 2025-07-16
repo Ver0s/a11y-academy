@@ -42,7 +42,7 @@ export default async function LearningPathPage({
 			<div className="flex flex-col gap-2">
 				<Link
 					href="/learning-paths"
-					className="text-primary hover:text-primary/80 mb-4 inline-block text-sm"
+					className="text-primary-foreground hover:text-primary/80 mb-4 inline-block text-sm"
 				>
 					← Back to Learning Paths
 				</Link>

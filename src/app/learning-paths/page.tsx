@@ -1,15 +1,5 @@
-import { Button } from "@/components/ui/button";
-import {
-	Card,
-	CardContent,
-	CardDescription,
-	CardFooter,
-	CardHeader,
-	CardTitle,
-} from "@/components/ui/card";
+import PathCard from "@/components/path-card";
 import { getAllLearningPaths } from "@/lib/contentLoaders";
-import { pluralize } from "@/lib/utils";
-import Link from "next/link";
 
 export default async function LearningPaths() {
 	const learningPaths = await getAllLearningPaths();
@@ -25,32 +15,7 @@ export default async function LearningPaths() {
 
 			<div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
 				{learningPaths.map((path) => (
-					<Card
-						key={path.slug}
-						className="transition-shadow hover:shadow-lg"
-					>
-						<CardHeader>
-							<CardTitle>{path.title}</CardTitle>
-							<CardDescription>
-								{path.description}
-							</CardDescription>
-						</CardHeader>
-						<CardContent>
-							<div className="text-muted-foreground flex items-center gap-2 text-sm">
-								<span className="inline-flex items-center gap-1">
-									📚 {path.lessonCount}{" "}
-									{pluralize("lesson", path.lessonCount)}
-								</span>
-							</div>
-						</CardContent>
-						<CardFooter>
-							<Button asChild>
-								<Link href={`/learning-paths/${path.slug}`}>
-									Start Learning
-								</Link>
-							</Button>
-						</CardFooter>
-					</Card>
+					<PathCard key={path.slug} path={path} />
 				))}
 			</div>
 

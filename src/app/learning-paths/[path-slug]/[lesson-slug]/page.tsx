@@ -85,8 +85,8 @@ export default async function LessonPage({
 				</div>
 
 				{/* Navigation */}
-				<div className="mt-8 flex justify-center gap-4">
-					<div>
+				<div className="mt-8 flex flex-col items-center justify-center gap-4">
+					<div className="flex gap-4">
 						{previousLesson && (
 							<Button variant="outline" asChild>
 								<Link
@@ -96,20 +96,18 @@ export default async function LessonPage({
 								</Link>
 							</Button>
 						)}
-					</div>
-					{user ? (
-						<LessonCompleteButton
-							userId={user.id}
-							lessonId={lessonContent.id}
-							completed={await isLessonCompleted(
-								user.id,
-								lessonContent.id,
-							)}
-						/>
-					) : (
-						<SignInButton />
-					)}
-					<div>
+						{user ? (
+							<LessonCompleteButton
+								userId={user.id}
+								lessonId={lessonContent.id}
+								completed={await isLessonCompleted(
+									user.id,
+									lessonContent.id,
+								)}
+							/>
+						) : (
+							<SignInButton />
+						)}
 						{nextLesson && (
 							<Button asChild>
 								<Link
@@ -120,9 +118,6 @@ export default async function LessonPage({
 							</Button>
 						)}
 					</div>
-				</div>
-
-				<div className="mt-4 text-center">
 					<Button variant="ghost" asChild>
 						<Link href={`/learning-paths/${pathSlug}`}>
 							← Back to {pathMetadata.title}

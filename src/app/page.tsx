@@ -11,7 +11,7 @@ import Link from "next/link";
 export default function Home() {
 	return (
 		<main>
-			<section className="from-background to-muted/20 flex flex-col items-center bg-gradient-to-b px-6 py-16 text-center">
+			<section className="flex flex-col items-center px-6 py-16 text-center">
 				<h1 className="mb-6 text-4xl font-bold md:text-6xl">
 					Master Digital{" "}
 					<span className="text-primary">Accessibility</span>

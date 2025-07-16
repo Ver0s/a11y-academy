@@ -26,9 +26,7 @@ export function LessonCard({
 	return (
 		<Card
 			className={`transition-shadow hover:shadow-lg ${
-				isCompleted
-					? "border-green-200 bg-green-50 dark:border-green-800 dark:bg-green-950"
-					: ""
+				isCompleted ? "border-primary bg-primary/10" : ""
 			}`}
 		>
 			<CardHeader>
@@ -38,8 +36,8 @@ export function LessonCard({
 							<span
 								className={`flex h-6 w-6 items-center justify-center rounded-full text-sm font-medium ${
 									isCompleted
-										? "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200"
-										: "bg-primary/10 text-primary"
+										? "bg-primary text-primary-foreground"
+										: "bg-primary/10 text-primary-foreground"
 								}`}
 							>
 								{index + 1}
@@ -53,7 +51,7 @@ export function LessonCard({
 						)}
 					</div>
 					{isCompleted && (
-						<CheckCircle2 className="ml-2 h-5 w-5 text-green-600 dark:text-green-400" />
+						<CheckCircle2 className="text-primary ml-2 h-5 w-5" />
 					)}
 				</div>
 			</CardHeader>

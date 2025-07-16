@@ -3,14 +3,10 @@ import { BookOpen } from "lucide-react";
 import { ThemeToggle } from "../theme/theme-toggle";
 import { Button } from "../ui/button";
 import SignOutButton from "../sign-out-button";
-import { createClient } from "@/lib/supabase/server";
+import { getCurrentUser } from "@/lib/supabase/server";
 
 export default async function Header() {
-	const supabase = await createClient();
-	const {
-		data: { user },
-	} = await supabase.auth.getUser();
-	console.warn(user);
+	const user = await getCurrentUser();
 
 	return (
 		<header className="bg-background sticky top-0 z-50 flex w-full justify-between border-b px-6 py-4">

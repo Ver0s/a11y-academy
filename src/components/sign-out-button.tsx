@@ -1,18 +1,16 @@
 "use client";
 
-import { useState } from "react";
+import { useTransition } from "react";
 import { Button } from "./ui/button";
-import { Loader2 } from "lucide-react";
 import { signOut } from "@/app/actions/auth";
 
 export default function SignOutButton() {
-	const [loading, setLoading] = useState(false);
+	const [isPending, startTransition] = useTransition();
 
 	const handleSignOut = async () => {
-		setLoading(true);
-		await signOut();
-
-		setLoading(false);
+		startTransition(async () => {
+			await signOut();
+		});
 	};
 
 	return (
@@ -20,10 +18,10 @@ export default function SignOutButton() {
 			variant="outline"
 			size="sm"
 			onClick={handleSignOut}
-			disabled={loading}
-			className="w-20"
+			disabled={isPending}
+			loading={isPending}
 		>
-			{loading ? <Loader2 className="animate-spin" /> : "Sign out"}
+			Sign out
 		</Button>
 	);
 }

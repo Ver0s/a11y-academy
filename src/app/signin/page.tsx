@@ -10,7 +10,6 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Loader2 } from "lucide-react";
 import Link from "next/link";
 import { useTransition } from "react";
 import { signIn } from "../actions/auth";
@@ -67,12 +66,9 @@ export default function SignInPage() {
 							type="submit"
 							className="w-full"
 							disabled={isPending}
+							loading={isPending}
 						>
-							{isPending ? (
-								<Loader2 className="animate-spin" />
-							) : (
-								"Sign in"
-							)}
+							Sign in
 						</Button>
 						<CardDescription>
 							Don&apos;t have an account?{" "}

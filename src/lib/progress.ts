@@ -89,3 +89,24 @@ export async function updateLessonProgress(
 		throw new Error("Failed to update lesson progress");
 	}
 }
+
+export async function getCompletedLessonsForPath(
+	userId: string,
+	pathSlug: string,
+): Promise<Set<string>> {
+	const supabase = await createClient();
+
+	const { data, error } = await supabase
+		.from("lesson_progress")
+		.select("lesson_id")
+		.eq("user_id", userId)
+		.like("lesson_id", `${pathSlug}/%`)
+		.eq("completed", true);
+
+	if (error) {
+		console.error("Error getting completed lessons:", error);
+		return new Set();
+	}
+
+	return new Set(data.map((row) => row.lesson_id));
+}

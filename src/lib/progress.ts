@@ -66,3 +66,26 @@ export async function getPathProgress(
 		completionPercentage,
 	};
 }
+
+export async function updateLessonProgress(
+	userId: string,
+	lessonId: string,
+	completed: boolean,
+): Promise<void> {
+	"use server";
+
+	const supabase = await createClient();
+
+	const { error } = await supabase.from("lesson_progress").upsert({
+		user_id: userId,
+		lesson_id: lessonId,
+		completed,
+		completed_at: completed ? new Date().toISOString() : null,
+		updated_at: new Date().toISOString(),
+	});
+
+	if (error) {
+		console.error("Error updating lesson progress:", error);
+		throw new Error("Failed to update lesson progress");
+	}
+}

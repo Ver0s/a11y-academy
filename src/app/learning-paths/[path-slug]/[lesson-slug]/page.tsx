@@ -1,3 +1,4 @@
+import { LessonCompleteButton } from "@/components/complete-lesson-button";
 import { Button } from "@/components/ui/button";
 import {
 	getAllLessonSlugs,
@@ -5,10 +6,9 @@ import {
 	getLessonsForPath,
 	getPathMetadata,
 } from "@/lib/contentLoaders";
-import { isLessonCompleted, updateLessonProgress } from "@/lib/progress";
+import { isLessonCompleted } from "@/lib/progress";
 import { getCurrentUser } from "@/lib/supabase/server";
 import { MDXRemote } from "next-mdx-remote/rsc";
-import { revalidatePath } from "next/cache";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
@@ -25,42 +25,6 @@ function SignInButton() {
 		<Button asChild variant="outline">
 			<Link href="/signin">Sign in to track progress</Link>
 		</Button>
-	);
-}
-
-async function toggleLessonComplete(
-	userId: string,
-	lessonId: string,
-	currentStatus: boolean,
-) {
-	"use server";
-	await updateLessonProgress(userId, lessonId, !currentStatus);
-
-	revalidatePath("/learning-paths", "layout");
-}
-
-async function LessonCompleteButton({
-	userId,
-	lessonId,
-}: {
-	userId: string;
-	lessonId: string;
-}) {
-	const completed = await isLessonCompleted(userId, lessonId);
-
-	return (
-		<form
-			action={toggleLessonComplete.bind(
-				null,
-				userId,
-				lessonId,
-				completed,
-			)}
-		>
-			<Button type="submit">
-				{completed ? "Lesson Completed" : "Mark Complete"}
-			</Button>
-		</form>
 	);
 }
 
@@ -137,6 +101,10 @@ export default async function LessonPage({
 						<LessonCompleteButton
 							userId={user.id}
 							lessonId={lessonContent.id}
+							completed={await isLessonCompleted(
+								user.id,
+								lessonContent.id,
+							)}
 						/>
 					) : (
 						<SignInButton />

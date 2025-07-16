@@ -8,6 +8,7 @@ import {
 	CardTitle,
 } from "@/components/ui/card";
 import { getAllLearningPaths } from "@/lib/contentLoaders";
+import { pluralize } from "@/lib/utils";
 import Link from "next/link";
 
 export default async function LearningPaths() {
@@ -37,8 +38,8 @@ export default async function LearningPaths() {
 						<CardContent>
 							<div className="text-muted-foreground flex items-center gap-2 text-sm">
 								<span className="inline-flex items-center gap-1">
-									📚 {path.lessonCount} lesson
-									{path.lessonCount !== 1 ? "s" : ""}
+									📚 {path.lessonCount}{" "}
+									{pluralize("lesson", path.lessonCount)}
 								</span>
 							</div>
 						</CardContent>

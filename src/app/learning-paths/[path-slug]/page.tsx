@@ -1,3 +1,4 @@
+import { PathProgressTracker } from "@/components/path-progress-tracker";
 import { Button } from "@/components/ui/button";
 import {
 	Card,
@@ -11,6 +12,7 @@ import {
 	getLessonsForPath,
 	getPathMetadata,
 } from "@/lib/contentLoaders";
+import { getCurrentUser } from "@/lib/supabase/server";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
@@ -27,6 +29,7 @@ export default async function LearningPathPage({
 	params: Promise<{ "path-slug": string }>;
 }) {
 	const { "path-slug": pathSlug } = await params;
+	const user = await getCurrentUser();
 
 	const [pathMetadata, lessons] = await Promise.all([
 		getPathMetadata(pathSlug),
@@ -38,23 +41,28 @@ export default async function LearningPathPage({
 	}
 
 	return (
-		<div className="container mx-auto min-h-screen px-4 py-8">
-			<div className="mb-8">
+		<div className="container mx-auto min-h-screen max-w-3xl px-4 py-8">
+			<div className="flex flex-col gap-2">
 				<Link
 					href="/learning-paths"
 					className="text-primary hover:text-primary/80 mb-4 inline-block text-sm"
 				>
 					← Back to Learning Paths
 				</Link>
-				<h1 className="mb-4 text-3xl font-bold">
-					{pathMetadata.title}
-				</h1>
+				<h1 className="text-3xl font-bold">{pathMetadata.title}</h1>
 				<p className="text-muted-foreground">
 					{pathMetadata.description}
 				</p>
+				{user && (
+					<PathProgressTracker
+						userId={user.id}
+						pathSlug={pathSlug}
+						totalLessonsInPath={lessons.length}
+					/>
+				)}
 			</div>
 
-			<div className="space-y-4">
+			<div className="space-y-4 pt-8">
 				{lessons.map((lesson, index) => (
 					<Card
 						key={lesson.id}

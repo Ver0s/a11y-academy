@@ -19,7 +19,7 @@ export async function PathProgressTracker({
 
 	return (
 		<div>
-			<p className="text-muted-foreground pb-2 text-sm">
+			<p className="text-accent-foreground pb-2 text-sm font-bold">
 				{pathProgress.completedLessons} out of{" "}
 				{pathProgress.totalLessons}{" "}
 				{pluralize("lesson", pathProgress.totalLessons)} completed

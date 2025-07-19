@@ -46,18 +46,6 @@ The **Tab key** is the primary way users move through interactive elements on a 
 </main>
 ```
 
-### Essential Keyboard Shortcuts
-
-| Key             | Function                                 |
-| --------------- | ---------------------------------------- |
-| **Tab**         | Move to next focusable element           |
-| **Shift + Tab** | Move to previous focusable element       |
-| **Enter**       | Activate buttons and links               |
-| **Space**       | Activate buttons, toggle checkboxes      |
-| **Arrow keys**  | Navigate within components (menus, tabs) |
-| **Escape**      | Close dialogs, menus, or cancel actions  |
-| **Home/End**    | Jump to first/last item in a list        |
-
 ## Focus Management
 
 ### Visible Focus Indicators

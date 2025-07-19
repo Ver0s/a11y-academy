@@ -12,7 +12,8 @@
 		"format": "prettier --write .",
 		"format-check": "prettier --check .",
 		"validate-content": "tsx scripts/validate-content.ts",
-		"check-all": "npm run check-types && npm run lint && npm run format-check"
+		"check-all": "npm run check-types && npm run lint && npm run format-check",
+		"prepare": "husky"
 	},
 	"dependencies": {
 		"@radix-ui/react-avatar": "^1.1.10",
@@ -48,6 +49,7 @@
 		"eslint": "^9",
 		"eslint-config-next": "15.3.5",
 		"eslint-config-prettier": "^10.1.5",
+		"husky": "^9.1.7",
 		"prettier": "3.6.2",
 		"prettier-plugin-tailwindcss": "^0.6.13",
 		"tailwindcss": "^4",

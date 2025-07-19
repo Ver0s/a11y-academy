@@ -74,7 +74,7 @@ export default function SignInPage() {
 							<CardDescription>
 								Don&apos;t have an account?{" "}
 								<Link href="/signup" className="text-primary">
-									Sign in
+									Sign up
 								</Link>
 							</CardDescription>
 						</div>

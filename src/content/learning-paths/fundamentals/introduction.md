@@ -152,7 +152,7 @@ In the following lessons, we'll dive deeper into specific accessibility topics:
 - Using ARIA attributes effectively
 - Testing your implementations
 
-Remember, accessibility is not a one-time fix—it's an ongoing commitment to inclusive design.
+**Remember, accessibility is not a one-time fix—it's an ongoing commitment to inclusive design.**
 
 ---
 

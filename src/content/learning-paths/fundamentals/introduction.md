@@ -25,7 +25,7 @@ While accessibility is essential for people with disabilities, it actually benef
 
 ## The Business Case for Accessibility
 
-Making your website accessible isn't just the right thing to do—it makes business sense:
+Making your website accessible isn't just the right thing to do, it makes business sense:
 
 ### Legal Requirements
 

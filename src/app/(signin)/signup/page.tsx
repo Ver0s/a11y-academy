@@ -26,7 +26,7 @@ export default function SignUpPage() {
 	};
 
 	return (
-		<main className="flex flex-1 items-start justify-center pt-16">
+		<main className="flex flex-1 items-start justify-center px-4 pt-16">
 			<Card className="w-full max-w-sm">
 				<CardHeader>
 					<CardTitle>Create an account</CardTitle>

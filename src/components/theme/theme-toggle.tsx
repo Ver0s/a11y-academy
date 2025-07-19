@@ -12,6 +12,7 @@ export function ThemeToggle() {
 	return (
 		<div className="flex items-center gap-2">
 			<Button
+				aria-label="Toggle theme"
 				variant="outline"
 				className="rounded-full border-none shadow-none"
 				size="icon"

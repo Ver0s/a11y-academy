@@ -31,6 +31,7 @@ export default async function Component() {
 								className="group size-8 md:hidden"
 								variant="ghost"
 								size="icon"
+								aria-label="Menu"
 							>
 								<svg
 									className="pointer-events-none"
@@ -83,7 +84,7 @@ export default async function Component() {
 							href="/"
 							className="text-primary flex items-center gap-2"
 						>
-							<BookOpen className="h-6 w-6" />
+							<BookOpen className="h-6 w-6" aria-label="Home" />
 							<span className="hidden text-xl font-bold md:block">
 								a11y academy
 							</span>

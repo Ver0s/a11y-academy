@@ -26,59 +26,61 @@ export default function SignUpPage() {
 	};
 
 	return (
-		<Card className="mx-auto w-full max-w-sm">
-			<CardHeader>
-				<CardTitle>Create an account</CardTitle>
-				<CardDescription>
-					Enter your email below to create an account
-				</CardDescription>
-			</CardHeader>
-			<CardContent>
-				<form action={handleSignUp}>
-					<div className="flex flex-col gap-6">
-						<div className="grid gap-2">
-							<Label htmlFor="email">Email</Label>
-							<Input
-								id="email"
-								type="email"
-								required
-								name="email"
-							/>
-						</div>
-						<div className="grid gap-2">
-							<div className="flex items-center">
-								<Label htmlFor="password">Password</Label>
-								<a
-									href="#"
-									className="ml-auto inline-block text-sm underline-offset-4 hover:underline"
-								>
-									Forgot your password?
-								</a>
+		<main className="flex flex-1 items-start justify-center pt-16">
+			<Card className="w-full max-w-sm">
+				<CardHeader>
+					<CardTitle>Create an account</CardTitle>
+					<CardDescription>
+						Enter your email below to create an account
+					</CardDescription>
+				</CardHeader>
+				<CardContent>
+					<form action={handleSignUp}>
+						<div className="flex flex-col gap-6">
+							<div className="grid gap-2">
+								<Label htmlFor="email">Email</Label>
+								<Input
+									id="email"
+									type="email"
+									required
+									name="email"
+								/>
 							</div>
-							<Input
-								id="password"
-								type="password"
-								required
-								name="password"
-							/>
+							<div className="grid gap-2">
+								<div className="flex items-center">
+									<Label htmlFor="password">Password</Label>
+									<a
+										href="#"
+										className="ml-auto inline-block text-sm underline-offset-4 hover:underline"
+									>
+										Forgot your password?
+									</a>
+								</div>
+								<Input
+									id="password"
+									type="password"
+									required
+									name="password"
+								/>
+							</div>
+							<Button
+								type="submit"
+								className="w-full"
+								disabled={isPending}
+								loading={isPending}
+							>
+								Sign up
+							</Button>
+							<CardDescription>
+								Already have an account?{" "}
+								<Link href="/signin" className="text-primary">
+									Sign in
+								</Link>
+							</CardDescription>
 						</div>
-						<Button
-							type="submit"
-							className="w-full"
-							disabled={isPending}
-							loading={isPending}
-						>
-							Sign up
-						</Button>
-						<CardDescription>
-							Already have an account?{" "}
-							<Link href="/signin" className="text-primary">
-								Sign in
-							</Link>
-						</CardDescription>
-					</div>
-				</form>
-			</CardContent>
-		</Card>
+					</form>
+				</CardContent>
+			</Card>
+		</main>
 	);
 }

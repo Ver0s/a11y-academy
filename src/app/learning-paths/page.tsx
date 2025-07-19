@@ -5,7 +5,7 @@ export default async function LearningPaths() {
 	const learningPaths = await getAllLearningPaths();
 
 	return (
-		<div className="container mx-auto min-h-screen px-4 py-8">
+		<div className="container mx-auto flex flex-1 flex-col px-4 py-8">
 			<div className="mb-8">
 				<h1 className="mb-4 text-3xl font-bold">Learning Paths</h1>
 				<p className="text-muted-foreground">

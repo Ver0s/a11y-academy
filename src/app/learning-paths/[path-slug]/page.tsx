@@ -38,7 +38,7 @@ export default async function LearningPathPage({
 	}
 
 	return (
-		<div className="container mx-auto min-h-screen max-w-3xl px-4 py-8">
+		<div className="container mx-auto flex max-w-3xl flex-1 flex-col px-4 py-8">
 			<div className="flex flex-col gap-2">
 				<Link
 					href="/learning-paths"

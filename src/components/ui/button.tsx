@@ -66,7 +66,7 @@ function Button({
 			{loading && (
 				<Loader2Icon
 					className={cn(
-						"text-muted absolute animate-spin",
+						"text-foreground absolute animate-spin",
 						// Used for conditional styling when button is loading
 						"loading",
 					)}

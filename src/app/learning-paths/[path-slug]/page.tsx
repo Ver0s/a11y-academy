@@ -1,14 +1,16 @@
-import { PathProgressTracker } from "@/components/path-progress-tracker";
+import {
+	LoadingSkeleton,
+	PathProgressTracker,
+} from "@/components/path-progress-tracker";
 import { LessonCard } from "@/components/lesson-card";
 import {
 	getAllLearningPathSlugs,
 	getLessonsForPath,
 	getPathMetadata,
 } from "@/lib/contentLoaders";
-import { getCompletedLessonsForPath } from "@/lib/progress";
-import { getCurrentUser } from "@/lib/supabase/server";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { Suspense } from "react";
 
 export async function generateStaticParams() {
 	const learningPaths = await getAllLearningPathSlugs();
@@ -23,14 +25,10 @@ export default async function LearningPathPage({
 	params: Promise<{ "path-slug": string }>;
 }) {
 	const { "path-slug": pathSlug } = await params;
-	const user = await getCurrentUser();
 
-	const [pathMetadata, lessons, completedLessons] = await Promise.all([
+	const [pathMetadata, lessons] = await Promise.all([
 		getPathMetadata(pathSlug),
 		getLessonsForPath(pathSlug),
-		user
-			? getCompletedLessonsForPath(user.id, pathSlug)
-			: Promise.resolve(new Set()),
 	]);
 
 	if (!pathMetadata || !lessons) {
@@ -50,22 +48,20 @@ export default async function LearningPathPage({
 				<p className="text-muted-foreground">
 					{pathMetadata.description}
 				</p>
-				{user && (
+				<Suspense fallback={<LoadingSkeleton />}>
 					<PathProgressTracker
-						userId={user.id}
 						pathSlug={pathSlug}
 						totalLessonsInPath={lessons.length}
 					/>
-				)}
+				</Suspense>
 			</div>
 
-			<div className="space-y-4 pt-8">
+			<div className="flex flex-col gap-4 pt-8">
 				{lessons.map((lesson, index) => (
 					<LessonCard
 						key={lesson.id}
 						lesson={lesson}
 						index={index}
-						isCompleted={completedLessons.has(lesson.id)}
 						pathSlug={pathSlug}
 					/>
 				))}

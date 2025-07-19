@@ -11,6 +11,7 @@ on:
 
 jobs:
     validate-content:
+        name: validate-content
         runs-on: ubuntu-latest
 
         steps:

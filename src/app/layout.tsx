@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 	subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
+export const metadata: any = {
 	title: "a11y academy",
 	description: "Learn web accessibility with a11y academy",
 };

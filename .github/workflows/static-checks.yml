@@ -1,0 +1,43 @@
+name: Static Checks
+
+on:
+    pull_request:
+    push:
+        branches: [main]
+
+jobs:
+    static-checks:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+
+            - name: Setup Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: "18"
+                  cache: "npm"
+
+            - name: Install dependencies
+              run: npm ci
+
+            - name: Check TypeScript types
+              run: npm run check-types
+
+            - name: Run ESLint
+              run: npm run lint
+
+            - name: Check Prettier formatting
+              run: npx prettier --check .
+
+            - name: Report success
+              if: success()
+              run: echo "✅ All static checks passed!"
+
+            - name: Report failure
+              if: failure()
+              run: |
+                  echo "❌ Static checks failed!"
+                  echo "Please fix the issues above before merging."
+                  exit 1

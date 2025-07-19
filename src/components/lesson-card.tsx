@@ -34,11 +34,7 @@ export function LessonCard({
 					<div className="flex-1">
 						<CardTitle className="flex items-center gap-2">
 							<span
-								className={`flex h-6 w-6 items-center justify-center rounded-full text-sm font-medium ${
-									isCompleted
-										? "bg-primary text-primary-foreground"
-										: "bg-primary/10 text-primary-foreground"
-								}`}
+								className={`bg-primary text-primary-foreground flex h-6 w-6 items-center justify-center rounded-full text-sm font-medium`}
 							>
 								{index + 1}
 							</span>

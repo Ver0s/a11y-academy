@@ -15,17 +15,18 @@ export default async function Header() {
 				<span className="text-xl font-bold">a11y academy</span>
 			</Link>
 
-			<nav className="hidden items-center gap-6 md:flex">
+			<nav className="hidden items-center gap-4 md:flex">
 				<Link
 					href="/learning-paths"
 					className="hover:text-primary text-sm font-medium"
 				>
 					Learning Paths
 				</Link>
+				<ThemeToggle />
 				{user ? (
 					<SignOutButton />
 				) : (
-					<div className="flex items-center gap-6">
+					<div className="flex items-center gap-4">
 						<Button asChild variant="outline" size="sm">
 							<Link href="/signin">Sign in</Link>
 						</Button>
@@ -34,7 +35,6 @@ export default async function Header() {
 						</Button>
 					</div>
 				)}
-				<ThemeToggle />
 			</nav>
 		</header>
 	);

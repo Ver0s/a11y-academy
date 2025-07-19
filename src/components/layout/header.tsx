@@ -22,9 +22,45 @@ export default async function Component() {
 	return (
 		<header className="border-b px-4 md:px-6">
 			<div className="flex h-16 items-center justify-between gap-4">
-				{/* Left side */}
 				<div className="flex items-center gap-2">
-					{/* Mobile menu trigger */}
+					<div className="flex items-center gap-6">
+						<Link
+							href="/"
+							className="text-primary flex items-center gap-2"
+						>
+							<BookOpen className="h-6 w-6" aria-label="Home" />
+							<span className="hidden text-xl font-bold md:block">
+								a11y academy
+							</span>
+						</Link>
+					</div>
+				</div>
+				<div className="flex items-center gap-4">
+					<NavigationMenu className="max-md:hidden">
+						<NavigationMenuList className="gap-2">
+							<NavigationMenuItem>
+								<Link
+									href="/learning-paths"
+									className="hover:text-primary text-sm font-medium"
+								>
+									Learning Paths
+								</Link>
+							</NavigationMenuItem>
+						</NavigationMenuList>
+					</NavigationMenu>
+					<ThemeToggle />
+					{user ? (
+						<SignOutButton />
+					) : (
+						<Fragment>
+							<Button asChild variant="outline" size="sm">
+								<Link href="/signin">Sign in</Link>
+							</Button>
+							<Button asChild variant="default" size="sm">
+								<Link href="/signup">Sign up</Link>
+							</Button>
+						</Fragment>
+					)}
 					<Popover>
 						<PopoverTrigger asChild>
 							<Button
@@ -78,48 +114,6 @@ export default async function Component() {
 							</NavigationMenu>
 						</PopoverContent>
 					</Popover>
-					{/* Main nav */}
-					<div className="flex items-center gap-6">
-						<Link
-							href="/"
-							className="text-primary flex items-center gap-2"
-						>
-							<BookOpen className="h-6 w-6" aria-label="Home" />
-							<span className="hidden text-xl font-bold md:block">
-								a11y academy
-							</span>
-						</Link>
-
-						{/* Navigation menu */}
-						<NavigationMenu className="max-md:hidden">
-							<NavigationMenuList className="gap-2">
-								<NavigationMenuItem>
-									<Link
-										href="/learning-paths"
-										className="hover:text-primary text-sm font-medium"
-									>
-										Learning Paths
-									</Link>
-								</NavigationMenuItem>
-							</NavigationMenuList>
-						</NavigationMenu>
-					</div>
-				</div>
-				{/* Right side */}
-				<div className="flex items-center gap-4">
-					<ThemeToggle />
-					{user ? (
-						<SignOutButton />
-					) : (
-						<Fragment>
-							<Button asChild variant="outline" size="sm">
-								<Link href="/signin">Sign in</Link>
-							</Button>
-							<Button asChild variant="default" size="sm">
-								<Link href="/signup">Sign up</Link>
-							</Button>
-						</Fragment>
-					)}
 				</div>
 			</div>
 		</header>

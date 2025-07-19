@@ -17,21 +17,18 @@ interface LessonMetadata {
 }
 
 interface ValidationError {
-	type: "error" | "warning";
 	file: string;
 	message: string;
 }
 
 interface ValidationResult {
 	errors: ValidationError[];
-	warnings: ValidationError[];
 	success: boolean;
 }
 
 class ContentValidator {
 	private contentDir: string;
 	private errors: ValidationError[] = [];
-	private warnings: ValidationError[] = [];
 
 	constructor() {
 		this.contentDir = path.join(
@@ -41,11 +38,7 @@ class ContentValidator {
 	}
 
 	private addError(file: string, message: string): void {
-		this.errors.push({ type: "error", file, message });
-	}
-
-	private addWarning(file: string, message: string): void {
-		this.warnings.push({ type: "warning", file, message });
+		this.errors.push({ file, message });
 	}
 
 	private async fileExists(filePath: string): Promise<boolean> {
@@ -216,7 +209,7 @@ class ContentValidator {
 		);
 
 		for (const unexpectedFile of unexpectedFiles) {
-			this.addWarning(
+			this.addError(
 				`${pathSlug}/${unexpectedFile}`,
 				"Unexpected file in path directory (only .md lesson files and path-metadata.json are expected)",
 			);
@@ -343,7 +336,7 @@ class ContentValidator {
 
 		for (const item of contentItems) {
 			if (item.name !== "learning-paths") {
-				this.addWarning(
+				this.addError(
 					`content/${item.name}`,
 					"Unexpected item in content directory. Only 'learning-paths' directory should exist.",
 				);
@@ -385,7 +378,6 @@ class ContentValidator {
 				);
 				return {
 					errors: this.errors,
-					warnings: this.warnings,
 					success: false,
 				};
 			}
@@ -412,7 +404,7 @@ class ContentValidator {
 			this.validateUniqueSlugs(paths, allLessons);
 
 			const success = this.errors.length === 0;
-			return { errors: this.errors, warnings: this.warnings, success };
+			return { errors: this.errors, success };
 		} catch (error) {
 			this.addError(
 				"validation",
@@ -420,7 +412,6 @@ class ContentValidator {
 			);
 			return {
 				errors: this.errors,
-				warnings: this.warnings,
 				success: false,
 			};
 		}
@@ -433,14 +424,6 @@ async function main() {
 	const result = await validator.validate();
 
 	// Print results
-	if (result.warnings.length > 0) {
-		console.log("⚠️  Warnings:");
-		for (const warning of result.warnings) {
-			console.log(`   ${warning.file}: ${warning.message}`);
-		}
-		console.log();
-	}
-
 	if (result.errors.length > 0) {
 		console.log("❌ Errors:");
 		for (const error of result.errors) {
@@ -451,9 +434,6 @@ async function main() {
 
 	if (result.success) {
 		console.log("✅ All content validation checks passed!");
-		console.log(
-			`   Validated ${result.warnings.length === 0 ? "without any issues" : `with ${result.warnings.length} warning(s)`}`,
-		);
 	} else {
 		console.log(
 			`❌ Content validation failed with ${result.errors.length} error(s)`,

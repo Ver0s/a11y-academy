@@ -70,7 +70,7 @@ export default function Home() {
 					</Card>
 				</div>
 			</section>
-			<section className="bg-muted/20 px-6 py-12">
+			<section className="px-6 py-12">
 				<div className="container mx-auto max-w-6xl">
 					<div className="mb-12 text-center">
 						<h2 className="mb-6 text-3xl font-bold">

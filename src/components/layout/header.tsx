@@ -65,7 +65,7 @@ export default async function Component() {
 						>
 							<NavigationMenu className="max-w-none *:w-full">
 								<NavigationMenuList className="flex-col items-start gap-0 md:gap-2">
-									<NavigationMenuItem>
+									<NavigationMenuItem className="pl-1">
 										<Link
 											href="/learning-paths"
 											className="hover:text-primary text-sm font-medium"

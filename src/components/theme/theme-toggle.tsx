@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 export function ThemeToggle() {
 	const { setTheme, theme } = useTheme();
 	const sun = <Sun className="h-[1.2rem] w-[1.2rem]" />;
-	const moon = <Moon className="absolute h-[1.2rem]" />;
+	const moon = <Moon className="h-[1.2rem] w-[1.2rem]" />;
 
 	return (
 		<div className="flex items-center gap-2">

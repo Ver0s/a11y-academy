@@ -57,74 +57,68 @@ export default async function LessonPage({
 			: null;
 
 	return (
-		<div className="container mx-auto min-h-screen px-4 py-8">
-			{/* Breadcrumb Navigation */}
-			<div className="mb-8">
-				<nav className="text-muted-foreground flex space-x-2 text-sm">
-					<Link href="/learning-paths" className="hover:text-primary">
-						Learning Paths
-					</Link>
-					<span>→</span>
-					<Link
-						href={`/learning-paths/${pathSlug}`}
-						className="hover:text-primary"
-					>
-						{pathMetadata.title}
-					</Link>
-					<span>→</span>
-					<span className="text-foreground">
-						{lessonContent.metadata.title}
-					</span>
-				</nav>
-			</div>
-
-			{/* Main Content */}
-			<article>
-				<div className="prose prose-neutral dark:prose-invert mx-auto max-w-3xl p-8">
-					<MDXRemote source={lessonContent.content} />
-				</div>
-
-				{/* Navigation */}
-				<div className="mt-8 flex flex-col items-center justify-center gap-4">
-					<div className="flex gap-4">
-						{previousLesson && (
-							<Button variant="outline" asChild>
-								<Link
-									href={`/learning-paths/${pathSlug}/${previousLesson.lessonSlug}`}
-								>
-									← {previousLesson.title}
-								</Link>
-							</Button>
-						)}
-						{user ? (
-							<LessonCompleteButton
-								userId={user.id}
-								lessonId={lessonContent.id}
-								completed={await isLessonCompleted(
-									user.id,
-									lessonContent.id,
-								)}
-							/>
-						) : (
-							<SignInButton />
-						)}
-						{nextLesson && (
-							<Button asChild>
-								<Link
-									href={`/learning-paths/${pathSlug}/${nextLesson.lessonSlug}`}
-								>
-									{nextLesson.title} →
-								</Link>
-							</Button>
-						)}
-					</div>
-					<Button variant="ghost" asChild>
-						<Link href={`/learning-paths/${pathSlug}`}>
-							← Back to {pathMetadata.title}
-						</Link>
-					</Button>
-				</div>
+		<div className="container mx-auto min-h-screen max-w-3xl px-4 py-8">
+			<nav className="text-muted-foreground flex gap-2 text-sm">
+				<Link
+					href="/learning-paths"
+					className="hover:text-primary truncate"
+				>
+					Learning Paths
+				</Link>
+				<span>→</span>
+				<Link
+					href={`/learning-paths/${pathSlug}`}
+					className="hover:text-primary truncate"
+				>
+					{pathMetadata.title}
+				</Link>
+				<span>→</span>
+				<span className="text-foreground truncate">
+					{lessonContent.metadata.title}
+				</span>
+			</nav>
+			<article className="prose prose-neutral dark:prose-invert max-w-3xl py-8">
+				<MDXRemote source={lessonContent.content} />
 			</article>
+			<div className="flex flex-col items-center justify-center gap-4">
+				<div className="flex flex-col gap-4 sm:flex-row">
+					{previousLesson && (
+						<Button variant="outline" asChild>
+							<Link
+								href={`/learning-paths/${pathSlug}/${previousLesson.lessonSlug}`}
+							>
+								← {previousLesson.title}
+							</Link>
+						</Button>
+					)}
+					{user ? (
+						<LessonCompleteButton
+							userId={user.id}
+							lessonId={lessonContent.id}
+							completed={await isLessonCompleted(
+								user.id,
+								lessonContent.id,
+							)}
+						/>
+					) : (
+						<SignInButton />
+					)}
+					{nextLesson && (
+						<Button asChild>
+							<Link
+								href={`/learning-paths/${pathSlug}/${nextLesson.lessonSlug}`}
+							>
+								{nextLesson.title} →
+							</Link>
+						</Button>
+					)}
+				</div>
+				<Button variant="ghost" asChild>
+					<Link href={`/learning-paths/${pathSlug}`}>
+						← Back to {pathMetadata.title}
+					</Link>
+				</Button>
+			</div>
 		</div>
 	);
 }

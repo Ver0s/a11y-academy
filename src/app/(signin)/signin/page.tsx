@@ -12,7 +12,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Link from "next/link";
 import { useTransition } from "react";
-import { signIn } from "../actions/auth";
+import { signIn } from "../actions";
 
 export default function SignInPage() {
 	const [isPending, startTransition] = useTransition();

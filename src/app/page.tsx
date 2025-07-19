@@ -11,7 +11,7 @@ import Link from "next/link";
 export default function Home() {
 	return (
 		<main>
-			<section className="flex flex-col items-center px-6 py-16 text-center">
+			<section className="flex flex-col items-center px-6 py-12 text-center">
 				<h1 className="mb-6 text-4xl font-bold md:text-6xl">
 					Master Digital{" "}
 					<span className="text-primary">Accessibility</span>
@@ -32,7 +32,7 @@ export default function Home() {
 					</Button>
 				</div>
 			</section>
-			<section className="container mx-auto max-w-7xl px-6 py-16">
+			<section className="container mx-auto max-w-7xl px-6 py-12">
 				<h2 className="mb-12 text-center text-3xl font-bold">
 					Why Choose a11y academy?
 				</h2>
@@ -70,7 +70,7 @@ export default function Home() {
 					</Card>
 				</div>
 			</section>
-			<section className="bg-muted/20 px-6 py-16">
+			<section className="bg-muted/20 px-6 py-12">
 				<div className="container mx-auto max-w-6xl">
 					<div className="mb-12 text-center">
 						<h2 className="mb-6 text-3xl font-bold">

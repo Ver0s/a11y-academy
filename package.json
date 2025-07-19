@@ -7,7 +7,8 @@
 		"build": "next build",
 		"start": "next start",
 		"lint": "next lint",
-		"validate-content": "tsx scripts/validate-content.ts"
+		"validate-content": "tsx scripts/validate-content.ts",
+		"check-types": "tsc"
 	},
 	"dependencies": {
 		"@radix-ui/react-avatar": "^1.1.10",

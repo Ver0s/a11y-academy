@@ -1,5 +1,6 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
 import { createClient } from "./supabase/server";
 
 export async function isLessonCompleted(
@@ -88,6 +89,8 @@ export async function updateLessonProgress(
 		console.error("Error updating lesson progress:", error);
 		throw new Error("Failed to update lesson progress");
 	}
+
+	revalidatePath("/learning-paths", "layout");
 }
 
 export async function getCompletedLessonsForPath(

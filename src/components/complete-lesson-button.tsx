@@ -4,7 +4,8 @@ import { Button } from "@/components/ui/button";
 import { isLessonCompleted, updateLessonProgress } from "@/lib/progress";
 import { getCurrentUser } from "@/lib/supabase/client";
 import { User } from "@supabase/supabase-js";
-import { CircleCheck, Link } from "lucide-react";
+import { CircleCheck } from "lucide-react";
+import Link from "next/link";
 import { useEffect, useState, useTransition } from "react";
 
 interface LessonCompleteButtonProps {

@@ -29,9 +29,7 @@ export default function PathCard({ path }: { path: LearningPath }) {
 					</span>
 				</div>
 				<Button asChild>
-					<Link href={`/learning-paths/${path.slug}`}>
-						Start Learning
-					</Link>
+					<Link href={`/learning-paths/${path.slug}`}>View</Link>
 				</Button>
 			</CardContent>
 		</Card>

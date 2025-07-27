@@ -5,11 +5,14 @@ import {
 	CardHeader,
 	CardTitle,
 } from "./ui/card";
-import { Presentation } from "lucide-react";
-import { pluralize } from "@/lib/utils";
 import { Button } from "./ui/button";
 import Link from "next/link";
 import { LearningPath } from "@/lib/contentLoaders";
+import {
+	PathCardProgressTracker,
+	PathCardProgressTrackerSkeleton,
+} from "./path-progress-tracker";
+import { Suspense } from "react";
 
 export default function PathCard({ path }: { path: LearningPath }) {
 	return (
@@ -21,13 +24,10 @@ export default function PathCard({ path }: { path: LearningPath }) {
 				<CardTitle>{path.title}</CardTitle>
 				<CardDescription>{path.description}</CardDescription>
 			</CardHeader>
-			<CardContent className="flex items-center justify-between">
-				<div className="text-muted-foreground flex items-center gap-2 text-sm">
-					<span className="inline-flex items-center gap-1">
-						<Presentation className="h-4 w-4" /> {path.lessonCount}{" "}
-						{pluralize("lesson", path.lessonCount)}
-					</span>
-				</div>
+			<CardContent className="flex items-center justify-between gap-12">
+				<Suspense fallback={<PathCardProgressTrackerSkeleton />}>
+					<PathCardProgressTracker path={path} />
+				</Suspense>
 				<Button asChild>
 					<Link href={`/learning-paths/${path.slug}`}>View</Link>
 				</Button>

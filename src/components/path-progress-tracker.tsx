@@ -40,7 +40,10 @@ export async function PathProgressTracker({
 				{pathProgress.totalLessons}{" "}
 				{pluralize("lesson", pathProgress.totalLessons)} completed
 			</p>
-			<Progress value={pathProgress.completionPercentage} />
+			<Progress
+				value={pathProgress.completionPercentage}
+				aria-label={`${pathProgress.completedLessons} out of ${pathProgress.totalLessons} ${pluralize("lesson", pathProgress.totalLessons)} completed`}
+			/>
 		</div>
 	);
 }
@@ -84,7 +87,10 @@ export async function PathCardProgressTracker({
 				{pathProgress.completedLessons} / {path.lessonCount}{" "}
 				{pluralize("lesson", path.lessonCount)} completed
 			</p>
-			<Progress value={pathProgress.completionPercentage} />
+			<Progress
+				value={pathProgress.completionPercentage}
+				aria-label={`${pathProgress.completedLessons} out of ${path.lessonCount} ${pluralize("lesson", path.lessonCount)} completed`}
+			/>
 		</div>
 	);
 }

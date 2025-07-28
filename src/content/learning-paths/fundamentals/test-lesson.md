@@ -28,16 +28,8 @@ Here's an example of syntax highlighting for HTML:
 
 ## Lists
 
-Unordered list:
-
 - Item 1
 - Item 2
     - Nested item
     - Another nested item
 - Item 3
-
-Numbered list:
-
-1. First item
-2. Second item
-3. Third item

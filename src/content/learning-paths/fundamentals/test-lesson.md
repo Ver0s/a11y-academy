@@ -18,11 +18,8 @@ Here's an example of syntax highlighting for HTML:
 
 ```html
 <h1>Main Title</h1>
-<h2>Section Title</h2>
 <p>Content paragraph</p>
-
 <div class="big-text">Main Title</div>
-<div class="medium-text">Section Title</div>
 <div>Content paragraph</div>
 ```
 

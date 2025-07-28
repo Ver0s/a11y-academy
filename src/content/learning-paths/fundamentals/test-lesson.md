@@ -1,7 +1,7 @@
 ---
 title: "Lesson for testing Markdown"
 description: "This lesson showcases how the platform supports markdown"
-order: 4
+order: 3
 ---
 
 # Markdown Examples

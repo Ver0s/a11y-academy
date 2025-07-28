@@ -171,3 +171,14 @@
 		@apply bg-background text-foreground;
 	}
 }
+
+/* Import highlight.js theme */
+@import "highlight.js/styles/github-dark.css";
+
+/* Override highlight.js styles to remove thick background/border */
+.hljs {
+	background: transparent !important;
+	border: none !important;
+	padding: 0 !important;
+	margin: 0 !important;
+}

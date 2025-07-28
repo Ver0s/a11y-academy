@@ -9,6 +9,7 @@ import {
 import { MDXRemote } from "next-mdx-remote/rsc";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import rehypeHighlight from "rehype-highlight";
 
 export async function generateStaticParams() {
 	const lessonSlugs = await getAllLessonSlugs();
@@ -67,7 +68,14 @@ export default async function LessonPage({
 				</span>
 			</nav>
 			<article className="prose prose-neutral dark:prose-invert max-w-3xl py-8">
-				<MDXRemote source={lessonContent.content} />
+				<MDXRemote
+					source={lessonContent.content}
+					options={{
+						mdxOptions: {
+							rehypePlugins: [rehypeHighlight],
+						},
+					}}
+				/>
 			</article>
 			<div className="flex flex-col items-center justify-center gap-4">
 				<div className="flex flex-col gap-4 sm:flex-row">

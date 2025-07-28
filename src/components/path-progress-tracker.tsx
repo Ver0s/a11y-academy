@@ -84,8 +84,7 @@ export async function PathCardProgressTracker({
 	return (
 		<div className="flex-1">
 			<p className="text-accent-foreground pb-2 text-sm font-bold">
-				{pathProgress.completedLessons} / {path.lessonCount}{" "}
-				{pluralize("lesson", path.lessonCount)} completed
+				{pathProgress.completedLessons} / {path.lessonCount} completed
 			</p>
 			<Progress
 				value={pathProgress.completionPercentage}

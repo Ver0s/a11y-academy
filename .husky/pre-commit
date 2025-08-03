@@ -2,16 +2,9 @@
 
 echo "🔧 Running pre-commit checks..."
 
-# Check if any files in src/content/ are staged for commit
-if git diff --cached --name-only | grep -q "^src/content/"; then
-  echo "📝 Content files changed, validating content structure..."
-  npm run validate-content || exit 1
-else
-  echo "📝 No content changes detected, skipping content validation"
-fi
+npx lint-staged || exit 1
 
-# Run your existing check-all script on staged files
-echo "🔧 Running code quality checks..."
-npm run check-all || exit 1
+echo "🔧 Running TypeScript type checking..."
+npm run check-types || exit 1
 
 echo "✅ Pre-commit checks completed!"

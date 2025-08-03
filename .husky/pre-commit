@@ -1,10 +1,5 @@
 #!/usr/bin/env sh
 
-echo "🔧 Running pre-commit checks..."
-
 npx lint-staged || exit 1
 
-echo "🔧 Running TypeScript type checking..."
 npm run check-types || exit 1
-
-echo "✅ Pre-commit checks completed!"
